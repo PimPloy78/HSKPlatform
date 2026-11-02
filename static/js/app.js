@@ -33,31 +33,6 @@ const state = {
 // ==========================================
 // View Routing & Navigation
 // ==========================================
-function toggleDrawer(open) {
-  const drawer = document.getElementById('slide-drawer');
-  const backdrop = document.getElementById('drawer-backdrop');
-  const edgeTab = document.getElementById('edge-drawer-tab');
-  
-  const shouldOpen = (open !== undefined) ? open : !drawer.classList.contains('open');
-  
-  if (shouldOpen) {
-    drawer.classList.add('open');
-    backdrop.classList.add('active');
-    if (edgeTab) edgeTab.style.opacity = '0';
-  } else {
-    drawer.classList.remove('open');
-    backdrop.classList.remove('active');
-    if (edgeTab) edgeTab.style.opacity = '1';
-  }
-}
-
-// Close drawer on Escape key
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') {
-    toggleDrawer(false);
-  }
-});
-
 function switchView(viewName) {
   state.currentView = viewName;
   const landingEl = document.getElementById('view-landing');
@@ -77,10 +52,10 @@ function switchView(viewName) {
 function switchTab(tabName) {
   state.currentTab = tabName;
   
-  // Update sidebar & drawer active classes
+  // Update sidebar active classes
   document.querySelectorAll('.nav-item').forEach(item => {
     item.classList.remove('nav-item-on');
-    if (item.getAttribute('data-tab') === tabName || item.getAttribute('data-drawer-tab') === tabName) {
+    if (item.getAttribute('data-tab') === tabName) {
       item.classList.add('nav-item-on');
     }
   });

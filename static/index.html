@@ -40,16 +40,92 @@
 <body class="bg-background text-foreground antialiased min-h-screen">
 
   <!-- =========================================================================
+       DRAWER NAVIGATION (Slide-out Side Tab / Off-Canvas Menu)
+       ========================================================================= -->
+  <!-- Floating Edge Drawer Tab Button (Left Side) -->
+  <button id="edge-drawer-tab" class="drawer-tab" onclick="toggleDrawer(true)" title="เปิดแถบเมนู (Sidebar Drawer)">
+    <span class="tab-icon">☰</span>
+    <span class="tab-text">เมนู</span>
+  </button>
+
+  <!-- Slide-out Drawer Backdrop Overlay -->
+  <div id="drawer-backdrop" class="drawer-backdrop" onclick="toggleDrawer(false)"></div>
+
+  <!-- Slide-out Drawer Panel -->
+  <aside id="slide-drawer" class="drawer-panel" aria-label="เมนูหลัก">
+    <div class="p-5 overflow-y-auto">
+      <!-- Header: Brand + Close Button -->
+      <div class="flex items-center justify-between pb-5 border-b border-border">
+        <div class="flex items-center gap-2.5 cursor-pointer" onclick="switchView('landing'); toggleDrawer(false)">
+          <span class="seal">考</span>
+          <span class="font-display text-lg font-bold tracking-tight text-foreground">HSK Practice</span>
+        </div>
+        <button onclick="toggleDrawer(false)" class="drawer-close-btn" title="ปิดเมนู">✕</button>
+      </div>
+
+      <!-- Section: เมนูหลัก (Vertical Navigation Tabs) -->
+      <div class="mt-5">
+        <p class="text-[11px] uppercase tracking-wider text-muted-foreground font-bold px-2 mb-2">เมนูหลัก (Navigation)</p>
+        <nav class="space-y-1">
+          <button onclick="switchView('landing'); toggleDrawer(false)" class="nav-item">
+            <span class="text-lg">🏠</span>
+            <span>หน้าแรก</span>
+          </button>
+          <button onclick="switchView('learn'); switchTab('exam'); toggleDrawer(false)" class="nav-item" data-drawer-tab="exam">
+            <span class="text-lg">✍️</span>
+            <span>ทำข้อสอบ</span>
+          </button>
+          <button onclick="switchView('learn'); switchTab('analytics'); toggleDrawer(false)" class="nav-item" data-drawer-tab="analytics">
+            <span class="text-lg">📈</span>
+            <span>สถิติความก้าวหน้า</span>
+          </button>
+          <button onclick="switchView('learn'); switchTab('history'); toggleDrawer(false)" class="nav-item" data-drawer-tab="history">
+            <span class="text-lg">🗂</span>
+            <span>ประวัติคะแนน</span>
+          </button>
+        </nav>
+      </div>
+
+      <!-- Section: เลือกระดับสอบด่วน (Quick Exam Start) -->
+      <div class="mt-6 pt-5 border-t border-border">
+        <p class="text-[11px] uppercase tracking-wider text-muted-foreground font-bold px-2 mb-2">เริ่มทำข้อสอบด่วน</p>
+        <div class="grid grid-cols-3 gap-2">
+          <button onclick="switchView('learn'); switchTab('exam'); startExam(1); toggleDrawer(false)" class="p-2.5 text-center rounded-lg border bg-muted/40 hover:border-primary hover:bg-primary-light transition text-xs font-semibold">
+            HSK 1
+          </button>
+          <button onclick="switchView('learn'); switchTab('exam'); startExam(2); toggleDrawer(false)" class="p-2.5 text-center rounded-lg border bg-muted/40 hover:border-primary hover:bg-primary-light transition text-xs font-semibold">
+            HSK 2
+          </button>
+          <button onclick="switchView('learn'); switchTab('exam'); startExam(3); toggleDrawer(false)" class="p-2.5 text-center rounded-lg border bg-muted/40 hover:border-primary hover:bg-primary-light transition text-xs font-semibold">
+            HSK 3
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Drawer Footer -->
+    <div class="p-4 border-t border-border bg-muted/40 text-xs text-muted-foreground flex items-center justify-between">
+      <span>ผู้เรียน (Candidate)</span>
+      <span class="text-primary font-semibold">HSK Platform</span>
+    </div>
+  </aside>
+
+  <!-- =========================================================================
        VIEW 1: LANDING PAGE (Marketing & Overview)
        Matches pixel-perfect-replay-45506.lovable.app
        ========================================================================= -->
   <div id="view-landing" class="min-h-screen flex flex-col justify-between">
     <!-- Navigation Bar -->
-    <header class="border-b border-border/60 bg-card/60 backdrop-blur-sm sticky top-0 z-50">
+    <header class="border-b border-border/60 bg-card/60 backdrop-blur-sm sticky top-0 z-30">
       <div class="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-        <div class="flex items-center gap-2.5 cursor-pointer" onclick="switchView('landing')">
-          <span class="seal">考</span>
-          <span class="font-display text-lg font-bold tracking-tight text-foreground">HSK Practice</span>
+        <div class="flex items-center gap-3">
+          <button onclick="toggleDrawer(true)" class="p-1.5 rounded-md hover:bg-muted text-muted-foreground hover:text-foreground transition" title="เปิดเมนูข้าง">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+          </button>
+          <div class="flex items-center gap-2.5 cursor-pointer" onclick="switchView('landing')">
+            <span class="seal">考</span>
+            <span class="font-display text-lg font-bold tracking-tight text-foreground">HSK Practice</span>
+          </div>
         </div>
         <button onclick="switchView('learn')" class="btn-ghost text-sm py-2 px-4">
           เมนูผู้เรียน

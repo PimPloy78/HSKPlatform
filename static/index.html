@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>考 HSK Practice — ฝึกข้อสอบ HSK ออนไลน์ จับเวลา ตรวจทันที</title>
+  
+  <!-- Fonts: Noto Sans Thai & Noto Serif SC/Thai for Calligraphy & Branding -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@600;700&family=Noto+Serif+Thai:wght@600;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#B83227',
+            'primary-hover': '#9E261D',
+            background: '#FAF8F5',
+            card: '#FFFFFF',
+            border: '#EAE6DF',
+            muted: '#F0ECE4',
+            foreground: '#22201E'
+          },
+          fontFamily: {
+            sans: ['"Noto Sans Thai"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            serif: ['"Noto Serif SC"', '"Noto Serif Thai"', 'serif']
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Custom Aesthetics Stylesheet -->
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body class="bg-background text-foreground antialiased min-h-screen">
+
+  <!-- =========================================================================
+       VIEW 1: LANDING PAGE (Marketing & Overview)
+       Matches pixel-perfect-replay-45506.lovable.app
+       ========================================================================= -->
+  <div id="view-landing" class="min-h-screen flex flex-col justify-between">
+    <!-- Navigation Bar -->
+    <header class="border-b border-border/60 bg-card/60 backdrop-blur-sm sticky top-0 z-50">
+      <div class="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
+        <div class="flex items-center gap-2.5 cursor-pointer" onclick="switchView('landing')">
+          <span class="seal">考</span>
+          <span class="font-display text-lg font-bold tracking-tight text-foreground">HSK Practice</span>
+        </div>
+        <button onclick="switchView('learn')" class="btn-ghost text-sm py-2 px-4">
+          เมนูผู้เรียน
+        </button>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <main class="mx-auto max-w-5xl px-6 pt-12 pb-16 text-center md:pt-20">
+      <p class="font-display text-7xl font-bold text-primary md:text-9xl select-none opacity-90 transition-transform duration-500 hover:scale-105">
+        汉语
+      </p>
+      <h1 class="font-display mx-auto mt-6 max-w-2xl text-4xl font-bold leading-tight text-foreground md:text-5xl">
+        ฝึกข้อสอบ HSK ทุกวัน<br>
+        <span class="text-primary">เห็นพัฒนาการชัดเจน</span>
+      </h1>
+      <p class="mx-auto mt-5 max-w-lg text-muted-foreground text-base md:text-lg">
+        ทำข้อสอบแบบจับเวลา ตรวจผลทันที และเก็บสถิติทุกครั้งเพื่อรู้ว่าต้องฝึกส่วนไหนเพิ่ม
+      </p>
+      
+      <div class="mt-8 flex justify-center gap-4">
+        <button onclick="switchView('learn'); switchTab('exam')" class="btn-primary text-base px-8 py-3.5 shadow-md">
+          เริ่มฝึกเลย
+        </button>
+        <button onclick="switchView('learn'); switchTab('analytics')" class="btn-ghost text-base px-6 py-3.5">
+          ดูสถิติความก้าวหน้า
+        </button>
+      </div>
+    </main>
+
+    <!-- 3 Core Feature Paper Cards -->
+    <section class="mx-auto grid max-w-5xl gap-5 px-6 pb-20 md:grid-cols-3">
+      <div class="paper">
+        <span class="text-3xl">⏱</span>
+        <h3 class="font-display mt-3 text-lg font-semibold text-foreground">จับเวลาเหมือนสอบจริง</h3>
+        <p class="mt-1 text-sm text-muted-foreground leading-relaxed">
+          นับถอยหลังและส่งคำตอบอัตโนมัติเมื่อหมดเวลา ช่วยฝึกบริหารเวลาในการทำข้อสอบจริง
+        </p>
+      </div>
+      
+      <div class="paper">
+        <span class="text-3xl">✓</span>
+        <h3 class="font-display mt-3 text-lg font-semibold text-foreground">ตรวจคะแนนทันที</h3>
+        <p class="mt-1 text-sm text-muted-foreground leading-relaxed">
+          เห็นเฉลยและผลแยกตามพาร์ท คำศัพท์ ไวยากรณ์ ตัวเลข พร้อมคำอธิบายละเอียดทุกข้อ
+        </p>
+      </div>
+      
+      <div class="paper">
+        <span class="text-3xl">📈</span>
+        <h3 class="font-display mt-3 text-lg font-semibold text-foreground">ติดตามความก้าวหน้า</h3>
+        <p class="mt-1 text-sm text-muted-foreground leading-relaxed">
+          เก็บประวัติทุกครั้งที่สอบ พร้อมกราฟพัฒนาการและระบบวิเคราะห์จุดที่ควรปรับปรุง
+        </p>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-border py-6 text-center text-xs text-muted-foreground bg-card/40">
+      <p>考 HSK Practice — Online Testing & Data Analytics Platform · Portfolio Project</p>
+    </footer>
+  </div>
+
+  <!-- =========================================================================
+       VIEW 2: LEARN WORKSPACE (Dashboard / Exam / History)
+       ========================================================================= -->
+  <div id="view-learn" class="min-h-screen md:flex app-layout hidden">
+    <!-- Sidebar -->
+    <aside class="app-sidebar border-b border-border bg-card p-5 md:min-h-screen md:w-64 md:border-b-0 md:border-r flex flex-col justify-between">
+      <div>
+        <div class="flex items-center gap-2.5 cursor-pointer pb-6 border-b border-border" onclick="switchView('landing')">
+          <span class="seal">考</span>
+          <span class="font-display text-lg font-bold tracking-tight text-foreground">HSK Practice</span>
+        </div>
+
+        <nav class="mt-6 flex gap-1.5 overflow-x-auto md:flex-col">
+          <button onclick="switchTab('analytics')" class="nav-item" data-tab="analytics">
+            <span class="text-lg">📈</span>
+            <span>สถิติความก้าวหน้า</span>
+          </button>
+          
+          <button onclick="switchTab('exam')" class="nav-item nav-item-on" data-tab="exam">
+            <span class="text-lg">✍️</span>
+            <span>ทำข้อสอบ</span>
+          </button>
+          
+          <button onclick="switchTab('history')" class="nav-item" data-tab="history">
+            <span class="text-lg">🗂</span>
+            <span>ประวัติคะแนน</span>
+          </button>
+        </nav>
+      </div>
+
+      <!-- User Profile / Return to Landing -->
+      <div class="mt-6 pt-4 border-t border-border">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <div class="w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-xs border border-primary/20">
+              U
+            </div>
+            <span class="text-xs font-medium text-foreground">ผู้เรียน (Candidate)</span>
+          </div>
+          <button onclick="switchView('landing')" class="text-xs text-primary hover:underline">
+            หน้าแรก
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 px-4 py-8 md:px-12 max-w-4xl">
+      
+      <!-- TAB 1: EXAM RUNNER -->
+      <section id="tab-exam">
+        <h1 class="font-display mb-6 text-2xl font-bold text-foreground">ทำข้อสอบ HSK</h1>
+        
+        <!-- State A: Level Selection Card -->
+        <div id="exam-start-card" class="paper">
+          <h2 class="font-display text-xl font-bold text-foreground">เลือกระดับข้อสอบ</h2>
+          <p class="text-sm text-muted-foreground mt-1">เลือกชุดข้อสอบตามระดับมาตรฐาน HSK ที่คุณต้องการฝึกฝน</p>
+          
+          <div class="mt-5 grid grid-cols-3 gap-3">
+            <button class="choice choice-on btn-level-choice" data-level="1">
+              <span class="font-display font-semibold">HSK 1</span>
+              <span class="text-xs text-muted-foreground ml-auto">พื้นฐาน 150 คำ</span>
+            </button>
+            <button class="choice btn-level-choice" data-level="2">
+              <span class="font-display font-semibold">HSK 2</span>
+              <span class="text-xs text-muted-foreground ml-auto">เบื้องต้น 300 คำ</span>
+            </button>
+            <button class="choice btn-level-choice" data-level="3">
+              <span class="font-display font-semibold">HSK 3</span>
+              <span class="text-xs text-muted-foreground ml-auto">ปานกลาง 600 คำ</span>
+            </button>
+          </div>
+          
+          <div class="mt-6 p-4 rounded-lg bg-muted/60 border border-border flex items-center gap-3 text-sm text-muted-foreground">
+            <span class="text-xl">⏱</span>
+            <span>8 ข้อ · เวลา 3 นาที · ตรวจคะแนนอัตโนมัติเมื่อหมดเวลา</span>
+          </div>
+          
+          <button onclick="startExam(state.selectedLevel)" class="btn-primary mt-6 w-full py-3.5 text-base">
+            เริ่มทำข้อสอบ
+          </button>
+        </div>
+
+        <!-- State B: Running Exam Card -->
+        <div id="exam-running-card" class="paper hidden">
+          <!-- Loading State -->
+          <div id="exam-loading-spinner" class="py-12 text-center hidden">
+            <div class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-primary border-t-transparent"></div>
+            <p class="mt-3 text-sm text-muted-foreground">กำลังจัดชุดข้อสอบ...</p>
+          </div>
+
+          <!-- Question Body -->
+          <div id="exam-question-box">
+            <!-- Header: Question Counter & Live Timer -->
+            <div class="flex items-center justify-between border-b pb-4">
+              <span id="exam-question-meta" class="text-sm font-semibold text-muted-foreground">
+                ข้อ 1/8 · คำศัพท์
+              </span>
+              <span id="exam-timer" class="timer-normal text-base font-semibold">
+                ⏱ 03:00
+              </span>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="mt-3 progress-track">
+              <div id="exam-progress-bar" class="progress-fill" style="width: 12.5%;"></div>
+            </div>
+
+            <!-- Question Navigator Pills -->
+            <div class="mt-4 flex items-center gap-1.5 flex-wrap" id="question-navigator-pills">
+              <!-- Rendered via JS -->
+            </div>
+
+            <!-- Question Prompt Card -->
+            <div class="mt-6 p-5 rounded-xl bg-muted/40 border border-border">
+              <h2 id="q-title" class="font-display text-2xl font-bold text-foreground">
+                กำลังโหลดคำถาม...
+              </h2>
+              <p id="q-pinyin" class="text-sm font-mono text-primary font-semibold mt-1">
+                pinyin
+              </p>
+            </div>
+
+            <!-- Multiple Choice Options -->
+            <div class="mt-5 grid gap-3" id="q-options-container">
+              <!-- Rendered via JS -->
+            </div>
+
+            <!-- Navigation Controls -->
+            <div class="mt-8 flex items-center justify-between gap-3 border-t pt-5">
+              <button id="btn-prev-q" onclick="prevQuestion()" class="btn-ghost" disabled>
+                ย้อนกลับ
+              </button>
+              
+              <div class="flex gap-2">
+                <button id="btn-next-q" onclick="nextQuestion()" class="btn-primary">
+                  ข้อถัดไป
+                </button>
+                <button id="btn-submit-exam" onclick="submitExam()" class="btn-primary hidden">
+                  ส่งคำตอบ (0/8)
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- State C: Result & Review Card -->
+        <div id="exam-result-card" class="paper hidden">
+          <div class="text-center pb-6 border-b">
+            <span class="text-xs uppercase tracking-widest text-muted-foreground font-semibold">สรุปผลการทดสอบ</span>
+            <div class="mt-2 flex items-baseline justify-center gap-2">
+              <span id="result-big-score" class="font-display text-6xl md:text-7xl font-bold text-primary">7</span>
+              <span id="result-total-score" class="font-display text-3xl text-muted-foreground">/8</span>
+            </div>
+            <div class="mt-2 inline-flex items-center gap-2">
+              <span id="result-pct-badge" class="px-2.5 py-1 rounded-full text-xs font-bold bg-primary-light text-primary border border-primary/20">87.5%</span>
+              <span id="result-praise-text" class="text-sm font-medium text-emerald-700">ยอดเยี่ยมมาก!</span>
+            </div>
+          </div>
+
+          <!-- Section Breakdown Grid -->
+          <div class="mt-6">
+            <h3 class="text-xs uppercase tracking-wider text-muted-foreground font-bold mb-3">คะแนนแยกตามพาร์ท</h3>
+            <div id="result-parts-grid" class="grid grid-cols-2 md:grid-cols-4 gap-3">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+
+          <!-- Question-by-Question Review -->
+          <div class="mt-8">
+            <h3 class="text-xs uppercase tracking-wider text-muted-foreground font-bold mb-3">เฉลยและทบทวนข้อสอบ</h3>
+            <ul id="result-questions-list" class="space-y-4">
+              <!-- Rendered via JS -->
+            </ul>
+          </div>
+
+          <!-- Bottom Actions -->
+          <div class="mt-8 flex flex-col md:flex-row gap-3">
+            <button onclick="resetExamToStart()" class="btn-primary flex-1 py-3 text-base">
+              ทำอีกครั้ง
+            </button>
+            <button onclick="switchTab('analytics')" class="btn-ghost flex-1 py-3 text-base">
+              ดูสถิติความก้าวหน้า
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: ANALYTICS DASHBOARD -->
+      <section id="tab-analytics" class="hidden">
+        <h1 class="font-display mb-6 text-2xl font-bold text-foreground">สถิติความก้าวหน้า</h1>
+        <div id="analytics-content">
+          <!-- Rendered via JS -->
+        </div>
+      </section>
+
+      <!-- TAB 3: EXAM HISTORY -->
+      <section id="tab-history" class="hidden">
+        <h1 class="font-display mb-6 text-2xl font-bold text-foreground">ประวัติคะแนน</h1>
+        <div id="history-content">
+          <!-- Rendered via JS -->
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Application Logic -->
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

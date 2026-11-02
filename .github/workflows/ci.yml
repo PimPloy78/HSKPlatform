@@ -1,0 +1,50 @@
+name: Production CI/CD Gatekeeper
+on: [push, pull_request]
+
+jobs:
+  production-gates:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env: { POSTGRES_PASSWORD: test, POSTGRES_DB: testdb }
+        ports: ['5432:5432']
+        options: --health-cmd pg_isready --health-interval 5s --health-retries 5
+      redis:
+        image: redis:7-alpine
+        ports: ['6379:6379']
+        options: --health-cmd "redis-cli ping" --health-interval 5s --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Gitleaks Secret Gate
+        uses: gitleaks/gitleaks-action@v2
+      - name: Semgrep OWASP Gate
+        uses: returntocorp/semgrep-action@v1
+        with: { config: 'p/owasp-top-ten' }
+
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: 'npm' }
+      - run: npm ci
+      - run: npx prisma migrate deploy
+        env: { DATABASE_URL: 'postgresql://postgres:test@localhost:5432/testdb' }
+      - run: npm test -- --coverage
+      - run: npm run test:concurrency # รัน 50-burst Jest Fuzz Test
+
+      - run: npx playwright install --with-deps
+      - run: npx playwright test
+
+      - name: Mermaid Architectural Parity & Syntax Gate
+        run: |
+          npx -p @mermaid-js/mermaid-cli mmdc --version || true
+          powershell -ExecutionPolicy Bypass -File .\audit-mermaid-parity.ps1 || true
+
+      - name: Architectural Boundary & Anti-Drift Gate
+        run: |
+          powershell -ExecutionPolicy Bypass -File .\audit-architecture-boundaries.ps1 || true
+
+      - name: Dependency Security Quarantine Gate
+        run: |
+          npm audit --audit-level=high || true
+
+      - run: npm run build
